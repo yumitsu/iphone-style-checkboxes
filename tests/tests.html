@@ -1,12 +1,9 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  <title>iPhone Style Radios Demo</title>
-  <script src="jquery/jquery-1.4.js" type="text/javascript" charset="utf-8"></script>
-  <script src="jquery/iphone-style-checkboxes.js" type="text/javascript" charset="utf-8"></script>
-  <link rel="stylesheet" href="style.css" type="text/css" media="screen" charset="utf-8" />
+  <title>iOS-style Checkboxes Demo</title>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+  <link rel="stylesheet" href="../themes/original-ios/ios-checkboxes.css">
   <style type="text/css">
     body {
       padding: 10px; }
@@ -18,22 +15,7 @@
     .css_sized_container .iPhoneCheckContainer {
       width: 250px; }
   </style>
-
-  <script type="text/javascript" charset="utf-8">
-    $(window).load(function() {
-      $('.on_off :checkbox').iphoneStyle();
-      $('.disabled :checkbox').iphoneStyle();
-      $('.css_sized_container :checkbox').iphoneStyle({ resizeContainer: false, resizeHandle: false });
-      $('.long_tiny :checkbox').iphoneStyle({ checkedLabel: 'Very Long Text', uncheckedLabel: 'Tiny' });
-      
-      var onchange_checkbox = $('.onchange :checkbox').iphoneStyle();
-      setInterval(function toggleCheckbox() {
-        onchange_checkbox.attr('checked', !onchange_checkbox.is(':checked')).change();
-        $('span#status').html(onchange_checkbox.is(':checked').toString());
-      }, 2500);
-    });
-  </script>
-  
+  <script src="../ios-checkboxes.js"></script>
 </head>
 <body>
   <table>
@@ -47,6 +29,12 @@
       <th><label for="on_off">Default</label></th>
       <td>
         <input type="checkbox" id="on_off" />
+      </td>
+    </tr>
+    <tr class="ios5">
+      <th><label for="ios5">iOS 5</label></th>
+      <td>
+        <input type="checkbox" id="ios5" />
       </td>
     </tr>
     <tr class="on_off">
@@ -75,6 +63,31 @@
       </td>
     </tr>
   </table>
-
+  <script type="text/javascript">
+    $(window).load(function() {
+      $('.on_off :checkbox').iphoneStyle();
+      $('.disabled :checkbox').iphoneStyle();
+      $('.ios5 :checkbox').iphoneStyle(); // Different CSS
+      $('.css_sized_container :checkbox').iphoneStyle({
+        resizeContainer: false,
+        resizeHandle: false
+      });
+      $('.long_tiny :checkbox').iphoneStyle({
+        checkedLabel: 'Very Long Text',
+        uncheckedLabel: 'Tiny'
+      });
+      
+      var onchange_checkbox = $('.onchange :checkbox').iphoneStyle({
+        onChange: function(elem, value) { 
+          $('span#status').html(value.toString());
+        }
+      });
+      
+      setInterval(function() {
+        onchange_checkbox.prop('checked', !onchange_checkbox.is(':checked')).iphoneStyle("refresh");
+        return
+      }, 2500);
+    });
+  </script>
 </body>
 </html>
